@@ -1,0 +1,15 @@
+"editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "window.title": "${activeEditorLong}${separator}${rootName}",
+  "window.zoomLevel": 1,
+  "editor.codeActionsOnSave": {
+    // For ESLint and StyleLint
+    "source.fixAll": true
+  },
+  "prettier.singleQuote": true,
+  "prettier.configPath": ".prettierrc",
+  "eslint.format.enable": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "eslint.alwaysShowStatus": true
