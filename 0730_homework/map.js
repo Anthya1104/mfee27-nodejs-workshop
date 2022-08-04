@@ -37,3 +37,21 @@ console.log(aryMap(kvArray))
 // 用for loop跑出的是 :
 // [ { '1': 10, '2': 20, '3': 30 } ]
 // 在迴圈內所有object會被鋪平放在同一個array裡，如果想做到只在第i個子陣列裡放{ key[i] : value[i]} 該怎麼實現
+
+
+// test
+// function aryMap2(ary){
+//     let result = []
+//     let rObj = {}
+//     for ( i = 0; i < ary.length; i++){
+//         for ( j = 0; j <= i + 1; j++){
+//             if( j = i){
+//                 rObj[ary[j-1].key] = ary[j-1].value
+//             }
+            
+//         }result[i] = rObj[ary[j-1].key]
+//     }
+//     return result
+// }
+
+// console.log(aryMap2(kvArray))
