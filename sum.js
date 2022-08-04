@@ -39,18 +39,18 @@ function sum3(n) {
 //測試效能 測數字很大時
 console.time('SUM1');
 for (let i = 1; i <= 1000; i++) {
-    sum(10000);
+  sum(10000);
 }
 console.timeEnd('SUM1');
 
 console.time('SUM2');
 for (let i = 1; i <= 10000; i++) {
-    sum2(1000);
+  sum2(1000);
 }
 console.timeEnd('SUM2');
 
 console.time('SUM3');
 for (let i = 1; i <= 10000; i++) {
-    sum3(1000);
+  sum3(1000);
 }
 console.timeEnd('SUM3');
