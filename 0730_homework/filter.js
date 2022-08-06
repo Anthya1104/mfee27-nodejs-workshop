@@ -27,7 +27,7 @@ console.log(result0);
 
 function aryFilter(ary) {
   let result = [];
-  for (i = 0; i < ary.length; i++) {
+  for (let i = 0; i < ary.length; i++) {
     if (ary[i].type === 'A') {
       result.push(ary[i]);
     }
