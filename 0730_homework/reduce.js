@@ -13,7 +13,7 @@ console.log(sumWithInitial);
 //for loop
 function arrayReduce(ary) {
   let result = 0;
-  for (i = 0; i < ary.length; i++) {
+  for (let i = 0; i < ary.length; i++) {
     result += ary[i];
   }
   return result;
