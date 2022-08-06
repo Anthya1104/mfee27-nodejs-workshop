@@ -1,40 +1,39 @@
 let ary = [
-    {
-      id: 1,
-      type: 'A',
-      price: 100,
-    },
-    {
-      id: 2,
-      type: 'B',
-      price: 200,
-    },
-    {
-      id: 3,
-      type: 'A',
-      price: 150,
-    },
-  ];
-  
-  //找到id = 2
+  {
+    id: 1,
+    type: 'A',
+    price: 100,
+  },
+  {
+    id: 2,
+    type: 'B',
+    price: 200,
+  },
+  {
+    id: 3,
+    type: 'A',
+    price: 150,
+  },
+];
 
-  //array.find
+//找到id = 2
 
-  let result0 = ary.find( (item) => item.id ===2 )
-  console.log(result0)
+//array.find
 
-  //for loop
+let result0 = ary.find((item) => item.id === 2);
+console.log(result0);
 
-  function aryFind(ary){
-    let result = null
-    for ( i = 0; i < ary.length; i++){
-        
-        if (ary[i].id === 2){
-            result = ary[i]
-            break
-        }
+//for loop
+
+function aryFind(ary) {
+  let result = null;
+  for (let i = 0; i < ary.length; i++) {
+    if (ary[i].id === 2) {
+      result = ary[i];
+      break;
     }
-    return result;
   }
+  return result;
+}
 
-  console.log(aryFind(ary))
+console.log(aryFind(ary));

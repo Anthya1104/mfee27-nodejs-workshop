@@ -1,6 +1,6 @@
 console.log('hello nodejs');
 
-// test 
+// test
 // let cats = ["red", "blue", "black"];
 // cats.push("white");
 // console.log(cats);
