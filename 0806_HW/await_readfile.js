@@ -3,15 +3,12 @@ const fs = require('fs');
 function fileReader(filePath, fileType) {
   return new Promise((resolve, reject) => {
     // reject('出錯啦讀不到');
-
-    resolve(
-      fs.readFile(filePath, fileType, (data, err) => {
-        if (err) {
-          return console.error(err);
-        }
-        console.log(data);
-      })
-    );
+    fs.readFile(filePath, fileType, (err, data) => {
+      if (err) {
+        return reject(console.error(`出錯啦:${err}`));
+      }
+      resolve(console.log(data));
+    });
   });
 }
 
