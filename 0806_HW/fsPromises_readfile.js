@@ -4,7 +4,7 @@ async function fileReading(path, encoding) {
   try {
     //這樣做會一直pending
     //error hint: await is not effective on this type
-    //my guess: because await is especially effected on promise function, and I declaired a 'console.log'function, which is not supported by await syntactic sugar, as 'promise' function
+    //my guess: await is especially effected on promise function, but I declaired a 'console.log'function, which would be not working when using syntactic sugar
 
     // const fileData = fs.readFile(path, encoding);
     // const promise = console.log(fileData);
