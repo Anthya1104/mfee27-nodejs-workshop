@@ -21,26 +21,26 @@
       let date = new Date();
       var responseDom = document.getElementById('response');
       var asyncBtn = document.getElementById('asyncBtn');
-      //記得一定要改成async function
-      asyncBtn.addEventListener('click', function () {
+
+      // asyncBtn.addEventListener('click', function () {
+      //   responseDom.innerHTML = '開始非同步請求';
+      // axios
+      //   .get('http://54.71.133.152:3000/')
+      //   .then(function (response) {
+      //     console.log(response);
+      //     responseDom.innerHTML = `Axios的結果: ${response.data}`;
+      //   })
+      //   .catch(console.error);
+      //TODO: 用await來寫
+      asyncBtn.addEventListener('click', async function () {
         responseDom.innerHTML = '開始非同步請求';
-        axios
-          .get('http://54.71.133.152:3000/')
-          .then(function (response) {
-            console.log(response);
-            responseDom.innerHTML = `Axios的結果: ${response.data}`;
-          })
-          .catch(console.error);
-        //TODO: 用await來寫
-        //   asyncBtn.addEventListener('click', async function () {
-        // responseDom.innerHTML = '開始非同步請求';
-        // await axios
-        //   .get('http://54.71.133.152:3000/')
-        //   .then(function (response) {
-        //     console.log(response);
-        //     responseDom.innerHTML = `Axios的結果: ${response.data}`;
-        //   })
-        //   .catch(console.error);
+        try {
+          let response = await axios.get('http://54.71.133.152:3000/');
+          console.log(response);
+          responseDom.innerHTML = `Axios的結果: ${response.data}`;
+        } catch (error) {
+          console.error(error);
+        }
       });
 
       var count = document.getElementById('count');
