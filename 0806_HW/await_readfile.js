@@ -5,24 +5,21 @@ function fileReader(filePath, fileType) {
     // reject('出錯啦讀不到');
     fs.readFile(filePath, fileType, (err, data) => {
       if (err) {
-        return reject(console.error(`出錯啦:${err}`));
+        return reject(err);
       }
-      resolve(console.log(data));
+      resolve(data);
     });
   });
 }
 
-async function fileReading() {
+async function filePrinting(filePath, fileType) {
   try {
-    let file1Result = await fileReader('0806_HW/test.txt', 'utf8');
-    file1Result;
-    let file2Result = await fileReader('0806_HW/test2.txt', 'utf8');
-    file2Result;
-    let file3Result = await fileReader('0806_HW/test3.txt', 'utf8');
-    file3Result;
+    let result = await fileReader(filePath, fileType);
+    console.log(result);
   } catch (err) {
     console.log(`出錯啦: ${err}`);
   }
 }
-
-fileReading();
+filePrinting('0806_HW/test.txt', 'utf8');
+filePrinting('0806_HW/test2.txt', 'utf8');
+filePrinting('0806_HW/test3.txt', 'utf8');

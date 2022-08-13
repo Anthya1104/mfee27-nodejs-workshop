@@ -25,12 +25,19 @@ function fileReader(filePath, fileType) {
     // reject('出錯啦讀不到');
     fs.readFile(filePath, fileType, (err, data) => {
       if (err) {
-        return reject(console.error(`出錯啦:${err}`));
+        return reject(err);
       }
-      resolve(console.log(data));
+      resolve(data);
     });
   });
 }
-fileReader('0806_HW/test.txt', 'utf8').catch((err) => {
-  console.error('在 promise 發生錯誤:', err);
-});
+
+//先執行fileReader 最後得到data
+fileReader('0806_HW/test.txt', 'utf8')
+  .then((data) => {
+    //用then把data丟出來做事
+    console.log(data);
+  })
+  .catch((err) => {
+    console.error('在 promise 發生錯誤:', err);
+  });
