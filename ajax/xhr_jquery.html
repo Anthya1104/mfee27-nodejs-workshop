@@ -4,7 +4,7 @@
     <title>XHR</title>
   </head>
   <body>
-    <button id="syncBtn">同步</button>
+    <button id="syncBtn">jquery</button>
     <button id="asyncBtn">非同步</button>
     <button id="countBtn">測試按鈕</button>
     <div id="count">0</div>
@@ -72,7 +72,7 @@
 
       //老師版本
       function xhrPromise(method, url) {
-        new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
           responseDom.innerText = '開始非同步請求';
           // TODO: 實作同步請求
           var xhr = new XMLHttpRequest();
@@ -80,16 +80,16 @@
             if (xhr.status === 200) {
               //成功
               resolve(xhr.responseText);
-              responseDom.innerHTML = `非同步請求已回復 ${xhr.responseText}`;
+              // responseDom.innerHTML = `非同步請求已回復 ${xhr.responseText}`;
             } else {
               //失敗
               reject(xhr.status);
-              responseDom.innerHTML = `非同步請求失敗，狀態碼： ${xhr.status}`;
+              // responseDom.innerHTML = `非同步請求失敗，狀態碼： ${xhr.status}`;
             }
           });
           xhr.onerror = function (event) {
             //失敗
-            reject(xhr.status);
+            reject('XHR 非同步請求錯誤');
             // responseDom.innerHTML = 'XHR 非同步請求錯誤';
           };
           //method, url, async (default: true)
@@ -100,15 +100,15 @@
       }
 
       var asyncBtn = document.getElementById('asyncBtn');
-      asyncBtn.addEventListener('click', function () {
+      //記得一定要改成async function
+      asyncBtn.addEventListener('click', async function () {
         responseDom.innerHTML = '開始非同步請求';
-        xhrPromise('GET', 'http://54.71.133.152:3000')
-          .then((data) => {
-            responseDom.innerHTML = `這個是promise版本${xhr.status}`;
-          })
-          .catch((err) => {
-            alert(`發生錯誤: ${err}`);
-          });
+        try {
+          let data = await xhrPromise('GET', 'http://54.71.133.152:3000');
+          responseDom.innerHTML = `這個是await版本${data}`;
+        } catch (e) {
+          console.log(`發生錯誤: ${err}`);
+        }
       });
 
       var count = document.getElementById('count');
