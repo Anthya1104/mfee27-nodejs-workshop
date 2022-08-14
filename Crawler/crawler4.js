@@ -26,7 +26,7 @@ async function getStack(queryDate, stockNo) {
       throw new Error(suggestion);
     }
     // console.log('suggestion:', suggestion);
-    //先分割陣列 再用pop取最後一個(萬一沒有中文名字 會拿到第一個 還是會抓得到其中一個名字)
+    //先分割陣列 再用pop取最後一個(萬一複數名字 會拿到第一個 還是會抓得到其中一個名字)
     let stockName = suggestion.split('\t').pop();
     console.log(stockName);
 
