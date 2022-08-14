@@ -3,6 +3,7 @@ const axios = require('axios');
 const moment = require('moment');
 let queryDate = moment().format('YYYYMMDD');
 let stockNo = '';
+//自己包
 let p = new Promise((resolve, reject) => {
   fs.readFile('stock.txt', 'utf8', (err, data) => {
     if (err) {
