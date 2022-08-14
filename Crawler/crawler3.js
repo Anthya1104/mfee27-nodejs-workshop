@@ -25,7 +25,7 @@ async function getStack(queryDate, stockNo) {
     });
     console.log(response.data);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 
