@@ -4,6 +4,9 @@ require('dotenv').config();
 const app = express();
 const port = process.env.SERVER_PORT;
 
+const cors = require('cors');
+app.use(cors());
+
 // solution 1
 const mysql = require('mysql2');
 
