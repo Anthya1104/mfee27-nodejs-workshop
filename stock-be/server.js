@@ -4,6 +4,37 @@ require('dotenv').config();
 const app = express();
 const port = process.env.SERVER_PORT;
 
+// solution 1
+const mysql = require('mysql2');
+
+let pool = mysql
+  // 建立一個pool
+  .createPool({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    // 設定pool連線上限
+    connectionLimit: 10,
+  })
+  .promise();
+
+// solution 2
+// const mysql = require('mysql2/promises');
+
+// let pool = mysql
+//   // 建立一個pool
+//   .createPool({
+//     host: process.env.DB_HOST,
+//     port: process.env.DB_PORT,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     database: process.env.DB_NAME,
+//     // 設定pool連線上限
+//     connectionLimit: 10,
+//   })
+
 // 設定試圖引擎 使用 pug (可自由替換喜歡的套件)
 // 記得先npm i pug裝好
 app.set('view engine', 'pug');
@@ -46,6 +77,19 @@ app.get('/', (req, res, next) => {
 app.get('/test', (req, res, next) => {
   console.log('這裡是test');
   res.send('Hello Test');
+});
+
+// API
+// 列出所有股票代碼 GET /stocks
+app.get('/api/1.0/stocks', async (req, res, next) => {
+  // 撈資料 -> 會撈出一個陣列 -> result[0] 是需要的資料 後面是一堆設定檔
+  // let result = await pool.execute(`SELECT * FROM stocks`);
+  // 陣列取值 ES6寫法
+  let [data] = await pool.execute(`SELECT * FROM stocks`);
+  console.log('result', data);
+  // 寫死: 先測試這樣傳是正確的
+  // res.json(['台積電', '聯發科', '長榮海']);
+  res.json(data);
 });
 
 app.use((req, res, next) => {
