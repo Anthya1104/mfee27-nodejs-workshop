@@ -4,9 +4,25 @@ require('dotenv').config();
 const app = express();
 const port = process.env.SERVER_PORT;
 
+// 設定試圖引擎 使用 pug (可自由替換喜歡的套件)
+// 記得先npm i pug裝好
+app.set('view engine', 'pug');
+// 告訴 express 視圖在哪裡 -> views 指定為 views檔案夾
+app.set('views', 'views');
+// 測試 server side render
+app.get('/ssr', (req, res, next) => {
+  // views/index.pug
+  // 可以設定要給的資料 傳進index.pug
+  res.render('index', {
+    stocks: ['台積電', '長榮', '聯發科'],
+  });
+});
+
 // 一般的middleware
 app.use((req, res, next) => {
   console.log('這是第 1 個中間件');
+  let now = new Date();
+  console.log(`有人來訪問 at ${now}`);
   next();
   // res.send('ABC'); //如果在這裡就send 請求會在這裡就結束 不會連到首頁
 });
@@ -19,16 +35,26 @@ app.use((req, res, next) => {
 
 // app.[method]
 // method: get, post, delete, put, patch......
+// 指定網址 -> 路由中間件
 app.get('/', (req, res, next) => {
   // 連到首頁 如果成功 回傳 Hello Express
   res.send('Hello Express');
   console.log('這是首頁');
 });
 
+// 路由中間件
+app.get('/test', (req, res, next) => {
+  console.log('這裡是test');
+  res.send('Hello Test');
+});
+
 app.use((req, res, next) => {
   // 但因為首頁 response 有指定網址: '/' 所以如果網址下的是其他網址 這裡會被執行到 e.g. localhost:3001/test (不存在的網址)
-  console.log('response已執行 這裡不會被執行到');
-  next();
+  // 如果前面完全沒有符合的網址 (404) 才會進來這裡
+  // 利用這個特殊順序，可以把這個位置當成 404 使用(可以客製頁面)
+  console.log('若找到網址 response已執行 這裡不會被執行到');
+  console.log('在所有路由中間件下面');
+  res.status(404).send('Not Found !!! @@');
   // res.send('ABC'); //如果在這裡就send 請求會在這裡就結束 不會連到首頁
 });
 
