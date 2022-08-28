@@ -29,7 +29,7 @@ const Stock = () => {
   useEffect(() => {
     console.log('stock', 'useEffect[data]');
     console.log('stock', data);
-    console.log(`${API_URL}/stocks`);
+    // console.log(`${API_URL}/stocks`);
   }, [data]);
 
   return (
