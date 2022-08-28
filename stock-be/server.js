@@ -6,12 +6,12 @@ const port = process.env.SERVER_PORT || 3001; //防呆
 
 // 預設都是全部開放(*)
 const cors = require('cors');
-// const corOptions = {
-//   // origin:['網址1','網址2',...其他網址]
-//   origin: ['http://localhost:3000'], //指定只允許自己家的同源網站
-// };
-// app.use(cors(corOptions));
-app.use(cors());
+const corOptions = {
+  // origin:['網址1','網址2',...其他網址]
+  origin: ['http://localhost:3000'], //指定只允許自己家的同源網站
+};
+app.use(cors(corOptions));
+// app.use(cors());
 
 // solution 1
 const mysql = require('mysql2');
@@ -44,7 +44,7 @@ let pool = mysql
 //     connectionLimit: 10,
 //   })
 
-// 設定試圖引擎 使用 pug (可自由替換喜歡的套件)
+// 設定視圖引擎 使用 pug (可自由替換喜歡的套件)
 // 記得先npm i pug裝好
 app.set('view engine', 'pug');
 // 告訴 express 視圖在哪裡 -> views 指定為 views檔案夾

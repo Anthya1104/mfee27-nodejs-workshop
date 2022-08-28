@@ -61,7 +61,7 @@ const StockDetails = () => {
     <div>
       {error && <div>{error}</div>}
       {/* 放頁碼 */}
-      <ul>{getPage()}</ul>
+      <ul className="d-flex justify-content-center mt-5">{getPage()}</ul>
       {data.map((item) => {
         return (
           <div className="bg-white bg-gray-50 p-6 rounded-lg shadow m-6" key={item.date}>
