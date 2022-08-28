@@ -14,8 +14,8 @@ app.use(cors(corOptions));
 // app.use(cors());
 
 // db refactor
+// stock API refactor 之後 會被丟進 stock.js 內 但為免未來其他功能需要用到同樣套件 這裡先保留
 const mysql = require('mysql2');
-
 const pool = require('./utilis/db');
 
 // 設定視圖引擎 使用 pug (可自由替換喜歡的套件)
