@@ -9,14 +9,14 @@ const StockDetails = () => {
   // 把網址上的 :stockId 拿出來
   const { stockId } = useParams();
   console.log('StockDetail - stockId', stockId);
-  // TODO: 去後端撈資料
+  // 去後端撈資料
 
-  // TODO: 1. axios.get -> 在哪個 useEffect 裡做？
+  // 1. axios.get -> 在哪個 useEffect 裡做？
 
-  // TODO: 2. setData
+  // 2. setData
   useEffect(() => {
     let getStockDetail = async () => {
-      let response = await axios.get('http://localhost:3001/api/1.0/stocks/1101');
+      let response = await axios.get(`http://localhost:3001/api/1.0/stocks/${stockId}`);
       setData(response.data);
     };
     getStockDetail();

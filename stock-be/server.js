@@ -108,6 +108,7 @@ app.get('/api/1.0/stocks/:stockId', async (req, res, next) => {
 
   //  去資料庫撈資料
   let [data] = await pool.execute(`SELECT * FROM stock_prices WHERE stock_id=?`, [stockId]);
+  // let [data] = await pool.execute(`SELECT * FROM stock_prices WHERE stock_id=${stockId}`);
 
   //  把取得的資料回覆給前端
 
