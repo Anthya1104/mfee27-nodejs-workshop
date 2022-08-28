@@ -18,6 +18,15 @@ app.use(cors(corOptions));
 const mysql = require('mysql2');
 const pool = require('./utilis/db');
 
+// 如果要讓 express 認得 json
+// 要加上這個中間件(少數 express 內建)
+app.use(express.json());
+
+// pug待完成
+// let pugRouter = require('./routers/pug');
+// 引用時路徑會被合併
+// app.use(pugRouter);
+
 // 設定視圖引擎 使用 pug (可自由替換喜歡的套件)
 // 記得先npm i pug裝好
 app.set('view engine', 'pug');
@@ -66,6 +75,10 @@ app.get('/test', (req, res, next) => {
 let stockRouter = require('./routers/stock');
 // 引用時路徑會被合併
 app.use('/api/1.0/stocks', stockRouter);
+
+// auth router 註冊驗證
+// let authRouter = require('./routers/auth');
+// app.use(authRouter);
 
 app.use((req, res, next) => {
   // 但因為首頁 response 有指定網址: '/' 所以如果網址下的是其他網址 這裡會被執行到 e.g. localhost:3001/test (不存在的網址)
