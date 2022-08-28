@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../utilis/config';
 
 const Stock = () => {
   const [error, setError] = useState(null);
@@ -16,7 +17,7 @@ const Stock = () => {
     // react希望寫法:
     let getStock = async () => {
       console.log('stock', 'useEffect []');
-      let response = await axios.get('http://localhost:3001/api/1.0/stocks');
+      let response = await axios.get(`${API_URL}/stocks`);
       setData(response.data);
       // 這裡不能拿 抓到的資料來用 因為上面是非同步
     };
@@ -28,6 +29,7 @@ const Stock = () => {
   useEffect(() => {
     console.log('stock', 'useEffect[data]');
     console.log('stock', data);
+    console.log(`${API_URL}/stocks`);
   }, [data]);
 
   return (

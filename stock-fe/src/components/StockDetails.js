@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../utilis/config';
 
 const StockDetails = () => {
   const [error, setError] = useState(null);
@@ -16,7 +17,7 @@ const StockDetails = () => {
   // 去後端撈資料
   useEffect(() => {
     let getStockDetail = async () => {
-      let response = await axios.get(`http://localhost:3001/api/1.0/stocks/${stockId}?page=${page}`);
+      let response = await axios.get(`${API_URL}/stocks/${stockId}?page=${page}`);
       setData(response.data.data);
       // 從後端取得總頁數 {lastPage}
       setLastPage(response.data.pagination.lastPage);
