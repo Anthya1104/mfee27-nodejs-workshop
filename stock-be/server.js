@@ -77,8 +77,8 @@ let stockRouter = require('./routers/stock');
 app.use('/api/1.0/stocks', stockRouter);
 
 // auth router 註冊驗證
-// let authRouter = require('./routers/auth');
-// app.use(authRouter);
+let authRouter = require('./routers/auth');
+app.use(authRouter);
 
 app.use((req, res, next) => {
   // 但因為首頁 response 有指定網址: '/' 所以如果網址下的是其他網址 這裡會被執行到 e.g. localhost:3001/test (不存在的網址)
