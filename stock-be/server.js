@@ -2,9 +2,15 @@ const express = require('express');
 // 初始化dotenv
 require('dotenv').config();
 const app = express();
-const port = process.env.SERVER_PORT;
+const port = process.env.SERVER_PORT || 3001; //防呆
 
+// 預設都是全部開放(*)
 const cors = require('cors');
+// const corOptions = {
+//   // origin:['網址1','網址2',...其他網址]
+//   origin: ['http://localhost:3000'], //指定只允許自己家的同源網站
+// };
+// app.use(cors(corOptions));
 app.use(cors());
 
 // solution 1
@@ -92,6 +98,21 @@ app.get('/api/1.0/stocks', async (req, res, next) => {
   console.log('result', data);
   // 寫死: 先測試這樣傳是正確的
   // res.json(['台積電', '聯發科', '長榮海']);
+  res.json(data);
+});
+
+// 列出指定股票代碼的所有資料
+// :react-route 的名字
+app.get('/api/1.0/stocks/:stockId', async (req, res, next) => {
+  const stockId = req.params.stockId;
+
+  //  去資料庫撈資料
+  let [data] = await pool.execute(`SELECT * FROM stock_prices WHERE stock_id=?`, [stockId]);
+
+  //  把取得的資料回覆給前端
+
+  // 開始寫中間前，先回 stockId 確定有成功包成API
+  // res.json({ stockId });
   res.json(data);
 });
 
