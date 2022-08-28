@@ -63,9 +63,10 @@ const StockDetails = () => {
       {/* 放頁碼 */}
       <ul className="d-flex justify-content-center mt-5">{getPage()}</ul>
       {data.map((item) => {
+        const newTime = item.date.slice(0, 10);
         return (
           <div className="bg-white bg-gray-50 p-6 rounded-lg shadow m-6" key={item.date}>
-            <h2 className="text-2xl font-bold mb-2 text-gray-800">日期：{item.date}</h2>
+            <h2 className="text-2xl font-bold mb-2 text-gray-800">日期：{newTime}</h2>
             <h2 className="text-2xl font-bold mb-2 text-gray-800">成交金額：{item.amount}</h2>
             <h2 className="text-2xl font-bold mb-2 text-gray-800">成交股數：{item.volume}</h2>
             <h2 className="text-2xl font-bold mb-2 text-gray-800">開盤價：{item.open_price}</h2>
