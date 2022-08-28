@@ -1,8 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const StockDetails = () => {
   const [error, setError] = useState(null);
+  const [data, setData] = useState([]);
 
+  // 把網址上的 :stockId 拿出來
+  const { stockId } = useParams();
+  console.log('StockDetail - stockId', stockId);
+  // TODO: 去後端撈資料
+
+  // TODO: 1. axios.get -> 在哪個 useEffect 裡做？
+
+  // TODO: 2. setData
+  useEffect(() => {
+    let getStockDetail = async () => {
+      let response = await axios.get('http://localhost:3001/api/1.0/stocks/1101');
+      setData(response.data);
+    };
+    getStockDetail();
+  }, []);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <div>
       {error && <div>{error}</div>}
