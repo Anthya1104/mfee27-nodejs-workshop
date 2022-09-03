@@ -24,6 +24,61 @@ const registerRules = [
     .withMessage('兩次密碼輸入不一致'),
 ];
 
+// node js 內建
+const path = require('path');
+
+// 如果用 FormData 上傳圖片 Content-Type ->
+// Content-Type : multipart/form-data;
+// 要用相關套件處理 e.g. multer
+// npm i multer
+// 引用
+const multer = require('multer');
+
+// 要處理的問題: 圖片存在哪裡?
+// diskStorage -> 硬碟
+const storage = multer.diskStorage({
+  // 設定 target dir
+  // 先手動建立 : ../public/uploads
+  destination: function (req, file, cb) {
+    const newPath = path.join(__dirname, '..', 'public', 'uploads');
+    //  cb 業界共識 : (error, 真正取得資料)
+    // __dirname -> 把相對路徑變成絕對路徑
+    // 如果沒做這件事 -> 在不同位置下命令可能造成路徑無法讀取
+    // 做了 -> 保證一定在 auth.js 所在位置 下命令執行
+    // cb(null, __dirname + '/../public/uploads');
+
+    // 但 不同作業系統中 依據不同情況 可能使用 / \
+    // 所以使用 path 套件 讓程式自動幫忙串接
+    cb(null, newPath);
+  }, // 圖片名稱
+  filename: function (req, file, cb) {
+    console.log('file', file);
+    // 原始檔名 file.originalname -> test.test.jpg (取副檔名)
+    // solution 1: 重新取名可以用UUID
+    // solution 2 : 用時間
+    const ext = file.originalname.split('.').pop();
+    cb(null, `member-${Date.now()}.${ext}`);
+  },
+});
+
+// 製作 上傳圖片中間件 (上傳器)
+const uploader = multer({
+  storage: storage,
+  // 過濾圖片
+  fileFilter: function (req, file, cb) {
+    if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
+      cb(new Error('wrong filetype'), false);
+    } else {
+      cb(null, true);
+    }
+  },
+  // 過濾檔案大小
+  limits: {
+    // 1k = 1024  -> 200k = 200 *1024
+    fileSize: 200 * 1024,
+  },
+});
+
 // 可以針對單一 router 使用 某些中間件
 // router.use(express.json())
 
@@ -31,9 +86,10 @@ const registerRules = [
 // 這個放法 -> 先進路由中間建件 ( .../quth/register ) -> 進 expresss.json() 中間件 -> request, response, next
 // 中間的 express.json 甚至可以塞陣列 [express.json(), 第二個中間件]
 
-router.post('/api/1.0/auth/register', express.json(), registerRules, async (req, res, next) => {
+router.post('/api/1.0/auth/register', express.json(), uploader.single('photo'), registerRules, async (req, res, next) => {
+  //TODO: try catch包起來
   // 確認資料有無收到
-  console.log('register', req.body);
+  console.log('register', req.body, req.file);
   // 資料驗證 (後端不能相信來自前端的資料)
   const validateResult = validationResult(req);
   console.log('validateResult', validateResult);
@@ -67,7 +123,8 @@ router.post('/api/1.0/auth/register', express.json(), registerRules, async (req,
   let hashedPassword = await bcrypt.hash(req.body.password, 10);
 
   //  資料存到資料庫
-  let result = await pool.execute('INSERT INTO members (email, password, name) VALUES (?, ?, ?);', [req.body.email, hashedPassword, req.body.name]);
+  let filename = req.file ? '/uploads/' + req.file.filename : '';
+  let result = await pool.execute('INSERT INTO members (email, password, name, photo) VALUES (?, ?, ?, ?);', [req.body.email, hashedPassword, req.body.name, filename]);
   console.log('insert new member', result);
   //  回覆前端
   res.json({ message: 'OK' });

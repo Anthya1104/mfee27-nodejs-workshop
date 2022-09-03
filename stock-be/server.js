@@ -32,6 +32,13 @@ app.use(express.json());
 app.set('view engine', 'pug');
 // 告訴 express 視圖在哪裡 -> views 指定為 views檔案夾
 app.set('views', 'views');
+
+// 設置靜態檔案
+const path = require('path');
+// express.static => 讓靜態檔案可以有網址
+// http://localhost:3001/uploads/member-1662189848502.png
+app.use(express.static(path.join(__dirname, 'public')));
+
 // 測試 server side render
 app.get('/ssr', (req, res, next) => {
   // views/index.pug

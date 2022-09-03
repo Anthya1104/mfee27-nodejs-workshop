@@ -4,7 +4,7 @@ const router = express.Router();
 // 記得先npm i pug裝好
 router.set('view engine', 'pug');
 // 告訴 express 視圖在哪裡 -> views 指定為 views檔案夾
-router.set('views', '../views');
+router.set('views', __dirname + '/../views');
 // 測試 server side render
 router.get('/ssr', (req, res, next) => {
   // views/index.pug
