@@ -22,17 +22,15 @@ const pool = require('./utilis/db');
 // 要加上這個中間件(少數 express 內建)
 app.use(express.json());
 
-// TODO:pug待完成
-// let pugRouter = require('./routers/pug');
-// 引用時路徑會被合併
-// app.use(pugRouter);
-
 // 設定視圖引擎 使用 pug (可自由替換喜歡的套件)
 // 記得先npm i pug裝好
 app.set('view engine', 'pug');
-// 告訴 express 視圖在哪裡 -> views 指定為 views檔案夾
+// // 告訴 express 視圖在哪裡 -> views 指定為 views檔案夾
 app.set('views', 'views');
-
+// TODO:pug待完成
+let pugRouter = require('./routers/pug');
+// 引用時路徑會被合併
+app.use(pugRouter);
 // 設置靜態檔案
 const path = require('path');
 // express.static => 讓靜態檔案可以有網址
