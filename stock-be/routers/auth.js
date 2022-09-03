@@ -75,7 +75,7 @@ const uploader = multer({
   // 過濾檔案大小
   limits: {
     // 1k = 1024  -> 200k = 200 *1024
-    fileSize: 200 * 1024,
+    fileSize: 500 * 1024,
   },
 });
 
@@ -144,6 +144,30 @@ router.post('/api/1.0/auth/register', express.json(), uploader.single('photo'), 
   //   // 如果有，回覆 400 跟錯誤訊息
   //   return res.status(400).json({ message: '該email已被使用' });
   // }
+});
+
+// 處理登入
+router.post('/api/1.0/auth/login', async (req, res, next) => {
+  console.log('login', req.body);
+  // TODO:資料驗證
+  // 確認此email是否有註冊過?
+  let [members] = await pool.execute('SELECT * FROM members WHERE email =?', [req.body.email]);
+  if (members === 0) {
+    // 代表沒有註冊過 -> 回復錯誤訊息
+    return res.status(400).json({ message: '帳號或密碼錯誤' });
+  }
+  // 到這邊代表有撈到資料 可開始比密碼
+  let member = members[0];
+  // 因為email有設定unique 且後端這邊也有做過處理 只會有一筆 所以可直接取 index 為 0 的 object
+  let compareResult = await bcrypt.compare(req.body.password, member.password);
+  if (!compareResult) {
+    // 如果密碼不對，就回覆 401
+    return res.status(401).json({ message: '帳號或密碼錯誤' });
+  }
+
+  // TODO: 密碼比對成功 -> (1) jwt token (2) session/cookie
+  // TODO: 回覆前端登入成功
+  res.json({});
 });
 
 module.exports = router;
