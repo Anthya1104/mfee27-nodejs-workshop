@@ -1,6 +1,7 @@
 import { API_URL } from '../utilis/config';
 import axios from 'axios';
 import { useState } from 'react';
+
 const Login = () => {
   const [loginMember, setLoginMember] = useState({ email: '1234567@test.com', password: '12345678' });
   const handleChange = (e) => {
@@ -36,7 +37,7 @@ const Login = () => {
           type="password"
           id="password"
           name="password"
-          value={loginMember.email}
+          value={loginMember.password}
           onChange={handleChange}
         />
       </div>
