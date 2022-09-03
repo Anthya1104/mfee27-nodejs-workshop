@@ -22,7 +22,7 @@ const pool = require('./utilis/db');
 // 要加上這個中間件(少數 express 內建)
 app.use(express.json());
 
-// pug待完成
+// TODO:pug待完成
 // let pugRouter = require('./routers/pug');
 // 引用時路徑會被合併
 // app.use(pugRouter);
@@ -84,6 +84,7 @@ let stockRouter = require('./routers/stock');
 app.use('/api/1.0/stocks', stockRouter);
 
 // auth router 註冊驗證
+// TODO: 引用時加上共用路徑
 let authRouter = require('./routers/auth');
 app.use(authRouter);
 
