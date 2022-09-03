@@ -27,7 +27,7 @@ app.use(express.json());
 app.set('view engine', 'pug');
 // // 告訴 express 視圖在哪裡 -> views 指定為 views檔案夾
 app.set('views', 'views');
-// TODO:pug待完成
+
 let pugRouter = require('./routers/pug');
 // 引用時路徑會被合併
 app.use(pugRouter);
