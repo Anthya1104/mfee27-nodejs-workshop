@@ -180,7 +180,7 @@ router.post('/api/1.0/auth/login', async (req, res, next) => {
   // 把資料寫進session
   req.session.member = saveMember;
   // 回覆前端登入成功
-  res.json({ saveMember });
+  res.json(saveMember);
 });
 
 // 處理登出

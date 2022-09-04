@@ -6,7 +6,6 @@ import Logo from '../img/fish.png';
 import axios from 'axios';
 import { useAuth } from '../context/auth';
 
-// TODO: try -> useState useEffect -> 一跳轉就 render 一次 member 初始資料
 const Navbar = () => {
   const { member, setMember } = useAuth();
   const handleLogout = async () => {
@@ -37,7 +36,7 @@ const Navbar = () => {
           <>
             {/* 登入後顯示的 */}
             Hi, 王大明
-            {/* TODO: issue : 目前跳轉後 img 路徑會失效 需要重新整理才會跑出來 */}
+            {/* issue : 目前跳轉後 img 路徑會失效 需要重新整理才會跑出來  -> resolved : 問題在後端 一開始 res.json(saveMember) 寫成了 res.json({saveMember}) 所以多包了一層*/}
             {/* 此時 member.photo -> undefied */}
             {/* 未刷新前 -> member: saveMember */}
             {/* 刷新後 -> member: 
