@@ -9,7 +9,11 @@ const Login = () => {
   };
   async function handleSubmit(e) {
     e.preventDefault();
-    let response = await axios.post(`${API_URL}/auth/login`, loginMember);
+    let response = await axios.post(`${API_URL}/auth/login`, loginMember, {
+      // 為了跨源存取 cookie 前端每個請求都要加
+      withCredentials: true,
+    });
+
     console.log(response.data);
   }
   return (

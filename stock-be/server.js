@@ -6,6 +6,17 @@ const port = process.env.SERVER_PORT || 3001; //防呆
 
 const path = require('path');
 
+// 預設都是全部開放(*)
+const cors = require('cors');
+// app.use(cors());
+const corOptions = {
+  // 讓 cookie 可以跨網域存取 須把 credentials 設為 true 並且在 origin 指定自家的前端是誰
+  credentials: true,
+  // origin:['網址1','網址2',...其他網址]
+  origin: ['http://localhost:3000'], //指定只允許自己家的同源網站
+};
+app.use(cors(corOptions));
+
 // 啟用 session;
 const expressSession = require('express-session');
 // 把 session 存在硬碟中
@@ -22,14 +33,6 @@ app.use(
     saveUninitialized: false,
   })
 );
-// 預設都是全部開放(*)
-const cors = require('cors');
-const corOptions = {
-  // origin:['網址1','網址2',...其他網址]
-  origin: ['http://localhost:3000'], //指定只允許自己家的同源網站
-};
-app.use(cors(corOptions));
-// app.use(cors());
 
 // db refactor
 // stock API refactor 之後 會被丟進 stock.js 內 但為免未來其他功能需要用到同樣套件 這裡先保留
