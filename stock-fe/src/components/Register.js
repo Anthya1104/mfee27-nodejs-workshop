@@ -36,7 +36,7 @@ const Register = () => {
       // let response = await axios.post(`${API_URL}/auth/register`, member);
       // console.log(response.data);
 
-      // solution 2 使用 fromData
+      // solution 2 使用 FormData
       let formData = new FormData();
       formData.append('email', member.email);
       formData.append('name', member.name);

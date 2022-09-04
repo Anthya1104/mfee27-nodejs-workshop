@@ -1,10 +1,12 @@
 import { API_URL, IMAGE_URL } from '../utilis/config';
 import { Link, NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import Logo from '../img/fish.png';
 import axios from 'axios';
 import { useAuth } from '../context/auth';
 
+// TODO: try -> useState useEffect -> 一跳轉就 render 一次 member 初始資料
 const Navbar = () => {
   const { member, setMember } = useAuth();
   const handleLogout = async () => {
@@ -36,7 +38,19 @@ const Navbar = () => {
             {/* 登入後顯示的 */}
             Hi, 王大明
             {/* TODO: issue : 目前跳轉後 img 路徑會失效 需要重新整理才會跑出來 */}
-            <img src={IMAGE_URL + member.photo} style={{ width: '80px' }} />
+            {/* 此時 member.photo -> undefied */}
+            {/* 未刷新前 -> member: saveMember */}
+            {/* 刷新後 -> member: 
+             {
+                  "id": 1,
+                  "name": "111",
+                  "email": "1234567@test.com",
+                  "photo": "/uploads/member-1662190302716.png"
+              }*/}
+            {/* 刷新前的資料多了一層array */}
+            {console.log(member)}
+            {console.log(member.photo)}
+            <img alt="icon" src={IMAGE_URL + member.photo} style={{ width: '80px' }} />
             <Link to="/about" onClick={handleLogout} className="text-xl text-gray-700 text-opacity-70 mx-3 md:mx-6 hover:text-opacity-90">
               登出
             </Link>

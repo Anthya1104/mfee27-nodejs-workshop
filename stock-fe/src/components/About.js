@@ -1,19 +1,29 @@
 import { API_URL, IMAGE_URL } from '../utilis/config';
 import { useEffect, useState } from 'react';
 
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../context/auth';
 
 const About = () => {
-  const [member, setMember] = useState(null);
-  useEffect(() => {
-    let getMember = async () => {
-      let response = await axios.get(`${API_URL}/member`, {
-        withCredentials: true,
-      });
-      setMember(response.data);
-    };
-    getMember();
-  }, []);
+  // 把 member, setMember 從 auth context 裡頭拿出來
+  const { member, setMember } = useAuth();
+
+  if (!member) {
+    return <Navigate to="/login" />;
+  }
+
+  // 如果從 context 裡面拿，這裡就不用自己再去要一次
+  // const [member, setMember] = useState(null);
+  // useEffect(() => {
+  //   let getMember = async () => {
+  //     let response = await axios.get(`${API_URL}/member`, {
+  //       withCredentials: true,
+  //     });
+  //     setMember(response.data);
+  //   };
+  //   getMember();
+  // }, []);
   return (
     <div className="m-7">
       <h2 className="m-7 text-2xl text-gray-600">這裡是魚股市</h2>
