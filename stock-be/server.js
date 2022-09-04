@@ -4,6 +4,23 @@ require('dotenv').config();
 const app = express();
 const port = process.env.SERVER_PORT || 3001; //防呆
 
+const path = require('path');
+
+// 啟用 session;
+const expressSession = require('express-session');
+// 把 session 存在硬碟中
+var FileStore = require('session-file-store')(expressSession);
+app.use(
+  expressSession({
+    // 檔案夾會放在專案之外 -> 防止 nodemon 一直重新啟動
+    store: new FileStore({ path: path.join(__dirname, '..', 'sessions') }),
+    secret: process.env.SESSION_SECRET,
+    // 如果 session 沒有改變 要不要重新儲存?
+    resave: false,
+    // 還沒初始化的 要不要存?
+    saveUninitialized: false,
+  })
+);
 // 預設都是全部開放(*)
 const cors = require('cors');
 const corOptions = {
@@ -32,7 +49,7 @@ let pugRouter = require('./routers/pug');
 // 引用時路徑會被合併
 app.use(pugRouter);
 // 設置靜態檔案
-const path = require('path');
+
 // express.static => 讓靜態檔案可以有網址
 // http://localhost:3001/uploads/member-1662189848502.png
 app.use(express.static(path.join(__dirname, 'public')));

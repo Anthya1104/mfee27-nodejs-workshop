@@ -165,9 +165,22 @@ router.post('/api/1.0/auth/login', async (req, res, next) => {
     return res.status(401).json({ message: '帳號或密碼錯誤' });
   }
 
-  // TODO: 密碼比對成功 -> (1) jwt token (2) session/cookie
-  // TODO: 回覆前端登入成功
-  res.json({});
+  //  密碼比對成功 -> (1) jwt token (2) session/cookie
+  //  solution 1 : session -> npm express-session : 業界常用 connect-redis
+  //                https://www.npmjs.com/package/connect-redis
+  //                這裡用session-file-store的方式
+  //                https://www.npmjs.com/package/session-file-store
+  let saveMember = {
+    id: member.id,
+    name: member.name,
+    email: member.email,
+    photo: member.photo,
+    // 密碼千萬不要存
+  };
+  // 把資料寫進session
+  req.session.member = saveMember;
+  // 回覆前端登入成功
+  res.json({ saveMember });
 });
 
 module.exports = router;
