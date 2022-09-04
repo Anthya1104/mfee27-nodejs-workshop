@@ -183,4 +183,10 @@ router.post('/api/1.0/auth/login', async (req, res, next) => {
   res.json({ saveMember });
 });
 
+// 處理登出
+router.get('/api/1.0/auth/logout', (req, res, next) => {
+  req.session.member = null;
+  res.json({ message: '登出成功' });
+});
+
 module.exports = router;

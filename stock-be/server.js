@@ -107,6 +107,11 @@ app.use('/api/1.0/stocks', stockRouter);
 let authRouter = require('./routers/auth');
 app.use(authRouter);
 
+// 引用 member
+let memberRouter = require('./routers/member');
+// 使用prefix
+app.use('/api/1.0/member', memberRouter);
+
 app.use((req, res, next) => {
   // 但因為首頁 response 有指定網址: '/' 所以如果網址下的是其他網址 這裡會被執行到 e.g. localhost:3001/test (不存在的網址)
   // 如果前面完全沒有符合的網址 (404) 才會進來這裡
