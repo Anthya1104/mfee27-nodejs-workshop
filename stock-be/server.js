@@ -103,7 +103,7 @@ let stockRouter = require('./routers/stock');
 app.use('/api/1.0/stocks', stockRouter);
 
 // auth router 註冊驗證
-// TODO: 引用時加上共用路徑
+// TODO: 引用時加上prefix
 let authRouter = require('./routers/auth');
 app.use(authRouter);
 
@@ -120,6 +120,16 @@ app.use((req, res, next) => {
   console.log('在所有路由中間件下面');
   res.status(404).send('Not Found !!! @@');
   // res.send('ABC'); //如果在這裡就send 請求會在這裡就結束 不會連到首頁
+});
+
+// 錯誤處理中間件：放在所有中間件後面(比404還後面)
+// 有四個參數
+// 捕捉上面所有中間件的 exception (除 await sync 之外的)
+// 可想成所有中間件的 catch
+app.use((err, req, res, next) => {
+  console.error('來自四個參數的錯誤處理中間件', err);
+  console.error('path:', req.path);
+  res.status(500).json({ message: '請洽系統管理員' });
 });
 
 // magic number -> 突然跑出一個數字不知道是什麼

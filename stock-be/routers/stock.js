@@ -6,6 +6,9 @@ const router = express.Router();
 
 const pool = require('../utilis/db');
 
+// custom middleware function
+const authMiddleware = require('../middlewares/auth');
+
 // API
 // 列出所有股票代碼 GET /stocks
 router.get('/', async (req, res, next) => {
@@ -21,7 +24,8 @@ router.get('/', async (req, res, next) => {
 
 // 列出指定股票代碼的所有資料
 // :react-route 的名字
-router.get('/:stockId', async (req, res, next) => {
+// authMiddleware -> 確認是否登入的中間件
+router.get('/:stockId', authMiddleware.checkLogin, async (req, res, next) => {
   const stockId = req.params.stockId;
 
   //  去資料庫撈資料
