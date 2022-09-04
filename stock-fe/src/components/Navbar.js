@@ -35,7 +35,8 @@ const Navbar = () => {
           <>
             {/* 登入後顯示的 */}
             Hi, 王大明
-            <img src={IMAGE_URL + member.saveMember.photo} style={{ width: '80px' }} />
+            {/* TODO: issue : 目前跳轉後 img 路徑會失效 需要重新整理才會跑出來 */}
+            <img src={IMAGE_URL + member.photo} style={{ width: '80px' }} />
             <Link to="/about" onClick={handleLogout} className="text-xl text-gray-700 text-opacity-70 mx-3 md:mx-6 hover:text-opacity-90">
               登出
             </Link>
