@@ -13,6 +13,7 @@ var FileStore = require('session-file-store')(expressSession);
 app.use(
   expressSession({
     // 檔案夾會放在專案之外 -> 防止 nodemon 一直重新啟動
+    // -> 一把資料寫入 session 專案會被直接停掉重啟 -> response 送不回去
     store: new FileStore({ path: path.join(__dirname, '..', 'sessions') }),
     secret: process.env.SESSION_SECRET,
     // 如果 session 沒有改變 要不要重新儲存?
