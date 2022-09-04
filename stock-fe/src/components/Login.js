@@ -1,9 +1,14 @@
 import { API_URL } from '../utilis/config';
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../context/auth';
 import { useState } from 'react';
 
 const Login = () => {
+  const { member, setMember } = useAuth();
   const [loginMember, setLoginMember] = useState({ email: '1234567@test.com', password: '12345678' });
+
+  const [isLogin, setIsLogin] = useState(false);
   const handleChange = (e) => {
     setLoginMember({ ...loginMember, [e.target.name]: e.target.value });
   };
@@ -15,7 +20,16 @@ const Login = () => {
     });
 
     console.log(response.data);
+    setIsLogin(true);
+    // 把 session 內的 member 存入 context
+    setMember(response.data);
   }
+
+  // 如果登入狀態 -> 直接跳轉
+  if (isLogin) {
+    return <Navigate to="/about" />;
+  }
+
   return (
     <form className="bg-purple-100 h-screen md:h-full md:my-20 md:mx-16 lg:mx-28 xl:mx-40 py-16 md:py-8 px-24 text-gray-800 md:shadow md:rounded flex flex-col md:justify-center">
       <h2 className="flex justify-center text-3xl mb-6 border-b-2 pb-2 border-gray-300">登入帳戶</h2>
